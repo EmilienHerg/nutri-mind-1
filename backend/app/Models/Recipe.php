@@ -7,14 +7,21 @@ use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Table('recipes')]
-#[Fillable('name', 'difficulty', 'peopleNb', 'isFavorite')]
+#[Fillable('name', 'difficulty', 'peopleNb', 'isFavorite', 'user_id')]
 class Recipe extends Model
 {
     use HasFactory;
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class);
     }
 }
